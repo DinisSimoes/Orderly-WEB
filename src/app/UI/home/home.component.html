@@ -1,0 +1,67 @@
+<h1>WEB Orderly</h1>
+
+<label
+  >Para adicionar vários produtos na mesma ordem colocar ";" nos campos. Ex:
+  Product 1; Product 2 no campo do nome e 2;3 no campo da quantidade</label
+>
+<br />
+<input matInput placeholder="Product Name" [(ngModel)]="nome" />
+<input matInput placeholder="Quantidade" [(ngModel)]="quantidade" />
+<button (click)="addOrder()">adicionar ordem</button
+><label *ngIf="showErrorProduct" style="color: red"
+  >preencher o campo nome e quantidade para adicionar a ordem</label
+>
+<br /><br />
+<label
+  >Para editar o status coloque um valor de 0 a 3. 0 = pendente, 1 = em
+  andamento, 2 = concluida, 3 = cancelada</label
+><br /><input
+  matInput
+  [(ngModel)]="status"
+  placeholder="Status para editar ordem"
+/>
+<label *ngIf="showErrorStatus" style="color: red"
+  >preencher o campo para editar a ordem</label
+>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="btnEliminar">
+    <th mat-header-cell *matHeaderCellDef>Eliminar</th>
+    <td mat-cell *matCellDef="let element">
+      <button (click)="deleteOrder(element.id)">eliminar ordem</button
+      >{{ element.position }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="btnEditar">
+    <th mat-header-cell *matHeaderCellDef>Editar Status</th>
+    <td mat-cell *matCellDef="let element">
+      <button (click)="editStatus(element.id)">editar ordem</button
+      >{{ element.position }}
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="customerId">
+    <th mat-header-cell *matHeaderCellDef>customerId</th>
+    <td mat-cell *matCellDef="let element">{{ element.customerId }}</td>
+  </ng-container>
+  <ng-container matColumnDef="orderDate">
+    <th mat-header-cell *matHeaderCellDef>orderDate</th>
+    <td mat-cell *matCellDef="let element">{{ element.orderDate }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="totalAmount">
+    <th mat-header-cell *matHeaderCellDef>totalAmount</th>
+    <td mat-cell *matCellDef="let element">{{ element.totalAmount }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>status</th>
+    <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<label *ngIf="showErrorEndpoint" style="color: red"
+  >Erro com o delete ou o update</label
+>
